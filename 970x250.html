@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <title>Mac-MediumRec</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+  <style>
+    html,
+    body {
+    width: 970px;
+    height: 250px;
+      margin: 0;
+      padding: 0;
+    }
+
+    #contentWrapper {
+      width: 970px;
+      height: 250px;
+        z-index: 100;
+    }
+    
+      #image {
+  width: 970px;
+  height: 250px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 9998;
+    }    
+
+    #ytplayer {
+      position: absolute;
+      left: 0;
+      top: 0px;
+      z-index: 110;
+      cursor: pointer;
+      width: 970px;
+      height: 250px;
+      border: 0px solid #000;
+    }
+
+#ct {
+  width: 970px;
+  height: 250px;
+  z-index: 9999;
+  position: absolute;
+  top: 0;
+  left: 0;
+  cursor: pointer;
+}
+
+
+    button.ytp-mute-button {
+      display: inline-block !important;
+    }
+
+    #ytplayerControls {
+      position: absolute;
+      z-index: 10000;
+      width: 35px;
+      height: 30px;
+      top: 5px;
+      left: 3px;
+      /* display: none; */
+    }
+
+    #ytplayerMuteControlPlay,
+    #ytplayerMuteControlMute {
+      position: relative;
+      margin-left: 5px;
+      width: 35px;
+      height: auto;
+      display: none;
+      cursor: pointer;
+      opacity: 0.5;
+    }
+
+    #ytplayerMuteControlPlay:hover {
+      opacity: 1;
+    }
+  </style>
+<script>
+	var getUriParams = function() {
+		var query_string = {}
+		var query = window.location.search.substring(1);
+		var parmsArray = query.split('&');
+		if(parmsArray.length <= 0) return query_string;
+		for(var i = 0; i < parmsArray.length; i++) {
+			var pair = parmsArray[i].split('=');
+			var val = decodeURIComponent(pair[1]);
+			if (val != '' && pair[0] != '') query_string[pair[0]] = val;
+		}
+		return query_string;
+	}();
+</script>
+</head>
+
+<body>
+
+
+
+  <div id="ct"></div>
+  <div id="contentWrapper">
+    <div id="bgWrapper">
+
+      
+      <video id="ytplayer" width="970" height="250" controlsList="nodownload" autoplay autobuffer loop muted playsinline preload="metadata">
+        <source src="video.mp4" type='video/mp4'>
+      </video>
+      <!-- <div id="ytplayer" class="">
+        <video width="300" height="171" controls controlsList="nodownload" autoplay autobuffer loop muted preload="metadata">
+      </div> -->
+      
+
+  </div>
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/modernizr/2.8.3/modernizr.min.js"></script>
+  <script src="https://media.vol.at/werbung/_plugins/iab_clicktag/jquery_iab-clicktag_plugin.js"></script>
+
+
+  <script>
+    $(document).ready(function() {
+      $('.clicktag').iabClicktag();
+
+      videoInit();
+    });
+
+    function videoInit() {
+      $('#ytplayer').get(0).volume = 0.65;
+      $('#ytplayer').get(0).play();
+
+
+      $('#ytplayerMuteControlMute').show();
+      $('#ytplayerControls').fadeIn(100);
+
+      $('#ytplayerMuteControlMute').click(function() {
+        // console.log("Mute clicked: ", $(this).css('display'));
+        $(this).hide();
+
+        if ($("#ytplayer").prop('muted')) {
+          $("#ytplayer").prop('muted', false);
+        }
+
+        $('#ytplayerMuteControlPlay').show();
+      });
+
+      $('#ytplayerMuteControlPlay').click(function() {
+        // console.log("Unmute clicked: ", $(this).css('display'));
+        $(this).hide();
+        if (!$("#ytplayer").prop('muted')) {
+          $("#ytplayer").prop('muted', true);
+        }
+
+        $('#ytplayerMuteControlMute').show();
+      });
+    }
+
+  </script>
+      
+  <script type="text/javascript" >
+      let ct = document.getElementById('ct');
+      ct.onclick = function() {
+        window.open(getUriParams.clicktag);
+      }
+  </script>
+      
+</body>
+
+</html>
